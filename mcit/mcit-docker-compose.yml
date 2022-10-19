@@ -1,0 +1,58 @@
+# Drupal with MySQL
+#
+# Access via "http://localhost:8080"
+#   (or "http://$(docker-machine ip):8080" if using docker-machine)
+#
+# During initial Drupal setup,
+# Database type: MySQL
+# ADVANCED OPTIONS; Database host: mysql
+
+# To run the stack run
+# sudo docker stack deploy -c mcit-docker-compose.yml mcit-drupal
+# To stop the stack run
+# sudo docker stack rm mcit-drupal
+
+# Maintainance user
+# Username: mcit_user
+# Password: Secret@mcit11
+
+version: '3.1'
+
+services:
+
+  drupal_mcit:
+    # image: drupal:9-apache
+    build:
+      context: ./
+      dockerfile: mcit.dockerfile
+    ports:
+      - 8080:80
+    volumes:
+      - /var/www/html/modules
+      - /var/www/html/profiles
+      - /var/www/html/themes
+      # this takes advantage of the feature in Docker that a new anonymous
+      # volume (which is what we're creating here) will be initialized with the
+      # existing content of the image at the same location
+      - /var/www/html/sites
+    restart: always
+
+  mysql_mcit:
+    image: mysql
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: d_mcit
+      MYSQL_USER: d_mcit_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+
+  # Database management in a single php file
+  # It is basically the admin panel for the database
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8180:8080
