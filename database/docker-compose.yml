@@ -29,8 +29,10 @@ services:
 
   # Database management in a single php file
   # It is basically the admin panel for the database
-  adminer:
-    image: adminer
+  phpmyadmin:
+    image: phpmyadmin:fpm-alpine
     restart: always
     ports:
-      - 8086:8080
+      - 8087:80
+    environment:
+      - PMA_ARBITRARY=1
