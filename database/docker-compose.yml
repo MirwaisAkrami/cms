@@ -33,6 +33,6 @@ services:
     image: phpmyadmin:fpm-alpine
     restart: always
     ports:
-      - 8087:80
+      - 8086:80
     environment:
       - PMA_ARBITRARY=1
