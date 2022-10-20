@@ -23,6 +23,6 @@ services:
     image: mysql
     restart: always
     ports:
-      - 8085:5432
+      - 8085:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
