@@ -30,7 +30,7 @@ services:
   # Database management in a single php file
   # It is basically the admin panel for the database
   phpmyadmin:
-    image: phpmyadmin:fpm-alpine
+    image: phpmyadmin
     restart: always
     ports:
       - 8086:80
