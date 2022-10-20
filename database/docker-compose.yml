@@ -26,3 +26,11 @@ services:
       - 8085:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+
+  # Database management in a single php file
+  # It is basically the admin panel for the database
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8086:8080
