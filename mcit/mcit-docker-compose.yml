@@ -24,7 +24,7 @@ services:
     # image: drupal:9-apache
     build:
       context: ./
-      dockerfile: mcit.dockerfile
+      dockerfile: Dockerfile
     ports:
       - 8080:80
     volumes:
